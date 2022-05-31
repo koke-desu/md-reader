@@ -1,4 +1,5 @@
 import InputPage from "components/InputPage";
+import NewStylePage from "components/NewStylePage";
 import StandardPage from "components/StandardPage";
 import { NextPage } from "next";
 import React, { useState } from "react";
@@ -26,6 +27,7 @@ const Index: NextPage = () => {
       </nav>
       {selectedTab === "Input" && <InputPage />}
       {selectedTab === "Standard" && <StandardPage />}
+      {selectedTab === "NewStyle" && <NewStylePage />}
     </div>
   );
 };
