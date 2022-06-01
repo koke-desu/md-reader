@@ -19,7 +19,11 @@ const ExtendHeader: React.FC<Props> = ({ parsedMD, depth }) => {
           return (
             <div
               key={`header-${depth}-${index}`}
-              className={"p-4 flex mt-4 flex-col rounded-lg " + colors[depth]}
+              className={
+                "p-4 flex mt-4 flex-col rounded-lg cursor-pointer " +
+                colors[depth] +
+                (childrenOpen[index] ? "" : " shadow-lg cursor-zoom-in") // 閉じてるときは影をつけて分かりやすく
+              }
               onClick={(e) => {
                 e.stopPropagation();
                 const nextOpen = childrenOpen.slice();
