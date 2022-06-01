@@ -1,6 +1,7 @@
 import SpecificHeader from "components/SpecificHeader";
 import { useInputText } from "globalState/inputText";
 import { Content, Header, ParsedMD } from "globalState/type";
+import { isHeader } from "globalState/typeChecker";
 import { useParseMD } from "hooks/useParseMD";
 import React from "react";
 import ReactMarkdown from "react-markdown";
@@ -34,16 +35,6 @@ const Presenter: React.FC<Props> = ({ parsedMD, depth }) => (
     })}
   </>
 );
-
-const isHeader = (element: any): element is Header => {
-  if (!element) return false;
-  if (typeof element.title !== "string") return false;
-
-  // childrenも再帰で求めたほうがいいだろうけど、今の使い方だと、どうせChildrenもそのうちisHeaderで調べるから省略
-  if (typeof element.children === "undefined") return false;
-
-  return true;
-};
 
 const Container: React.FC<ContainerProps> = (props) => {
   const [md] = useInputText();
