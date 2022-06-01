@@ -7,7 +7,7 @@ type Props = {
   setText: (text: string) => void;
 } & ContainerProps;
 
-const Presenter: React.VFC<Props> = ({ text, setText }) => (
+const Presenter: React.FC<Props> = ({ text, setText }) => (
   <textarea
     className="flex-1 w-4/5 border border-gray-400 shadow-md"
     value={text}
@@ -17,7 +17,7 @@ const Presenter: React.VFC<Props> = ({ text, setText }) => (
   />
 );
 
-const Container: React.VFC<ContainerProps> = (props) => {
+const Container: React.FC<ContainerProps> = (props) => {
   const [text, setText] = useInputText();
 
   return <Presenter {...props} {...{ text, setText }} />;
