@@ -7,7 +7,7 @@ export const useParseMD = (_md: string): ParsedMD => {
 
   let depth = 0;
 
-  md.forEach((row) => {
+  md.filter((row) => row !== "").forEach((row) => {
     const headerReg = new RegExp("^#+ ");
 
     if (headerReg.test(row)) {
@@ -48,12 +48,14 @@ const getLastHeader = (md: ParsedMD, depth = 0): Header | undefined => {
   let now: Header = { children: md, title: "" };
   let count = 0;
 
-  while (count < depth - 1) {
+  while (count < depth) {
     const lastHeader = now.children
       .filter((child) => Object.keys(child).some((key) => key === "children"))
       .at(-1) as Header | undefined;
     count++;
     if (lastHeader === undefined) return;
+
+    now = lastHeader;
   }
 
   return now;
