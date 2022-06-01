@@ -107,6 +107,11 @@
   word-wrap: break-word;
 }
 
+/* listの点を追加。TailWindのReset CSSでデフォルトのが消されてるみたい */
+.markdown_body li {
+  list-style: disc;
+}
+
 .markdown_body .octicon {
   display: inline-block;
   fill: currentColor;

@@ -7,36 +7,44 @@ export const useParseMD = (_md: string): ParsedMD => {
 
   let depth = 0;
 
-  md.filter((row) => row !== "").forEach((row) => {
-    const headerReg = new RegExp("^#+ ");
+  try {
+    md.filter((row) => row !== "").forEach((row) => {
+      const headerReg = new RegExp("^#+ ");
 
-    if (headerReg.test(row)) {
-      // rowがhタグの場合の処理
-      const [head] = row.split(" ");
-      const numOfHash = head.length; // #が何個あるか
+      if (headerReg.test(row)) {
+        // rowがhタグの場合の処理
+        const [head] = row.split(" ");
+        const numOfHash = head.length; // #が何個あるか
 
-      const element: Header = {
-        title: row.slice(numOfHash), // # の数＋スペースを除いた部分をタイトルとする
-        children: [],
-      };
+        const element: Header = {
+          title: row.slice(numOfHash), // # の数＋スペースを除いた部分をタイトルとする
+          children: [],
+        };
 
-      const parent = getLastHeader(result, numOfHash - 1);
-      if (parent === undefined) throw Error("不正な形式のmarkdown?");
+        const parent = getLastHeader(result, numOfHash - 1);
+        if (parent === undefined) throw Error("不正な形式のmarkdown?");
 
-      parent.children.push(element);
-      depth = numOfHash;
-    } else {
-      // hタグ以外の場合
-      const element: Content = {
-        body: row,
-      };
+        parent.children.push(element);
+        depth = numOfHash;
+      } else {
+        // hタグ以外の場合
+        const element: Content = {
+          body: row,
+        };
 
-      const parent = getLastHeader(result, depth);
-      if (parent === undefined) throw Error("不正な形式のmarkdown");
+        const parent = getLastHeader(result, depth);
+        if (parent === undefined) throw Error("不正な形式のmarkdown");
 
-      parent.children.push(element);
-    }
-  });
+        parent.children.push(element);
+      }
+    });
+  } catch {
+    return [
+      {
+        body: "MDの形式に問題があります。「h1の直下にh3がある」みたいな不具合が無いかご確認ください",
+      },
+    ];
+  }
 
   return result;
 };
