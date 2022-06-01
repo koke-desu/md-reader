@@ -9,7 +9,7 @@ type Props = {
 
 const Presenter: React.FC<Props> = ({ text, setText }) => (
   <textarea
-    className="flex-1 w-4/5 border border-gray-400 shadow-md"
+    className="flex-1 w-4/5 border border-gray-400 shadow-md p-4"
     value={text}
     onChange={(e) => {
       setText(e.target.value);
